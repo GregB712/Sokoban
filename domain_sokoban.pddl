@@ -1,0 +1,48 @@
+﻿(define (domain sokoban)
+    (:predicates (worker ?w)
+	(box ?b)
+	(cell ?c)
+	(atw ?w ?c)
+	(atb ?b ?c)
+	(free ?c)
+	(up ?c ?c)
+	(down ?c ?c)
+	(left ?c ?c)
+	(right ?c ?c))
+    (:action move_up
+	:parameters (?w ?fc ?tc)
+	:precondition (and (worker ?w) (cell ?fc) (cell ?tc) (atw ?w ?fc) (up ?fc ?tc) (free ?tc))
+	:effect (and (atw ?w ?tc) (free ?fc) (not (free ?tc)) (not (atw ?w ?fc))))
+	(:action move_down
+	:parameters (?w ?fc ?tc)
+	:precondition (and (worker ?w) (cell ?fc) (cell ?tc) (atw ?w ?fc) (down ?fc ?tc) (free ?tc))
+	:effect (and (atw ?w ?tc) (free ?fc) (not (free ?tc)) (not (atw ?w ?fc))))
+	(:action move_left
+	:parameters (?w ?fc ?tc)
+	:precondition (and (worker ?w) (cell ?fc) (cell ?tc) (atw ?w ?fc) (left ?fc ?tc) (free ?tc))
+	:effect (and (atw ?w ?tc) (free ?fc) (not (free ?tc)) (not (atw ?w ?fc))))
+	(:action move_right
+	:parameters (?w ?fc ?tc)
+	:precondition (and (worker ?w) (cell ?fc) (cell ?tc) (atw ?w ?fc) (right ?fc ?tc) (free ?tc))
+	:effect (and (atw ?w ?tc) (free ?fc) (not (free ?tc)) (not (atw ?w ?fc))))
+	(:action push_up
+	:parameters (?w ?b ?wfc ?wtc ?btc)
+	:precondition (and (worker ?w) (box ?b) (cell ?wfc) (cell ?wtc) (cell ?btc) (atb ?b ?wtc) (up ?wtc ?btc) (free ?btc)
+		    (atw ?w ?wfc) (up ?wfc ?wtc))
+	:effect (and (atw ?w ?wtc) (atb ?b ?btc) (free ?wfc) (not (free ?wtc)) (not (atw ?w ?wfc)) (not (atb ?b ?wtc))))
+	(:action push_down
+	:parameters (?w ?b ?wfc ?wtc ?btc)
+	:precondition (and (worker ?w) (box ?b) (cell ?wfc) (cell ?wtc) (cell ?btc) (atb ?b ?wtc) (down ?wtc ?btc) (free ?btc)
+		    (atw ?w ?wfc) (down ?wfc ?wtc))
+	:effect (and (atw ?w ?wtc) (atb ?b ?btc) (free ?wfc) (not (free ?wtc)) (not (atw ?w ?wfc)) (not (atb ?b ?wtc))))
+	(:action push_left
+	:parameters (?w ?b ?wfc ?wtc ?btc)
+	:precondition (and (worker ?w) (box ?b) (cell ?wfc) (cell ?wtc) (cell ?btc) (atb ?b ?wtc) (left ?wtc ?btc) (free ?btc)
+		    (atw ?w ?wfc) (left ?wfc ?wtc))
+	:effect (and (atw ?w ?wtc) (atb ?b ?btc) (free ?wfc) (not (free ?wtc)) (not (atw ?w ?wfc)) (not (atb ?b ?wtc))))
+    (:action push_right
+	:parameters (?w ?b ?wfc ?wtc ?btc)
+	:precondition (and (worker ?w) (box ?b) (cell ?wfc) (cell ?wtc) (cell ?btc) (atb ?b ?wtc) (right ?wtc ?btc) (free ?btc)
+		    (atw ?w ?wfc) (right ?wfc ?wtc))
+	:effect (and (atw ?w ?wtc) (atb ?b ?btc) (free ?wfc) (not (free ?wtc)) (not (atw ?w ?wfc)) (not (atb ?b ?wtc))))
+)
